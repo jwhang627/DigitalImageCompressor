@@ -1,0 +1,30 @@
+Digital Image Compression Final Project
+
+Undergraduate Students Version
+
+Due May 12 11:00 AM
+
+Objective: develop a DCT-based image compression system.
+
+The system will have the following modules:
+
+Encoder:
+1. 8*8 DCT transform of the image;
+2. Uniform quantization
+3. Zig-zag scan (use table) and run-level coding;
+4. Size + amplitude representation ofthe non-zero coefficients;
+5. Use Huffman coder (to be provided by MATLAB) to encode run-size
+sequence; Do binary representation of the amplitude;
+6. Calculate the bit rate of the compressed image.
+
+Decoder:
+1. Inverse quantization;
+2. Inverse run-level coding and zig-zag scan;
+3. Inverse DCT;
+4. Compute the PSNR of the reconstructed image;
+
+Submission:
+1. A 3 to 5 page report to summarize the implementation with PSNR-rate
+curves for 3 test images;
+2. Demo the encoder and decoder on the due day.
+3. Email the source code in a zipped package before the demo
