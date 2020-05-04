@@ -1,0 +1,7 @@
+https://stackoverflow.com/questions/5296515/subband-decomposition-using-daubechies-filter
+
+https://stackoverflow.com/questions/7110899/how-do-i-apply-a-dct-to-an-image-in-python
+
+https://en.wikipedia.org/wiki/Embedded_Zerotrees_of_Wavelet_transforms
+
+https://www.techrepublic.com/article/huffman-coding-in-python/
