@@ -2,7 +2,9 @@
 Final Project for Digital Image Class
 
 Language: Python3
+
 Operating System(s): Debian Buster (linux bash shell on Windows), & Ubuntu 20.04 LTS (and maybe MX Linux 19.1)
+
 Editors: Emacs, Vim, & Nano
 
 ## Instruction
