@@ -30,3 +30,22 @@ The system will have the following modules:
 2. Inverse run-level coding and zig-zag scan.
 3. Inverse DCT;
 4. Compute the PSNR of the reconstructed image;
+
+## Images
+
+```
+images/
+├── jpeg
+│   ├── butterfly.jpeg
+│   ├── empress.jpeg
+│   ├── lithograph.jpeg
+│   ├── purpleFlower.jpeg
+│   └── sunflower.jpeg
+└── png
+    ├── giant.png
+    ├── lithograph.png
+    ├── robinWilliams.png
+    ├── rose.png
+    └── woman.png
+
+```
