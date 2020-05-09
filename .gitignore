@@ -1,0 +1,4 @@
+# specific ignores
+
+__pycache__/
+*.pyc
