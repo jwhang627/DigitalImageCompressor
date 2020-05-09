@@ -33,21 +33,32 @@ The system will have the following modules:
 
 ## Images
 
+Images used in this project came from Unsplash, Creative Commons,
+Wikicommons, and Reddit.
+
 ```
-size: 640x640
+directories with "640" tag contain images of 640x640 size.
 
 images/
-├── jpeg
+├── 640-jpeg
 │   ├── butterfly.jpeg
 │   ├── empress.jpeg
 │   ├── lithograph.jpeg
 │   ├── purpleFlower.jpeg
 │   └── sunflower.jpeg
+├── 640-png
+│   ├── giant.png
+│   ├── lithograph.png
+│   ├── robinWilliams.png
+│   ├── rose.png
+│   └── woman.png
+├── jpeg
+│   ├── robot.jpeg
+│   ├── twoDogsAndWoman.jpeg
+│   └── twoWomen.jpeg
 └── png
-    ├── giant.png
-    ├── lithograph.png
-    ├── robinWilliams.png
-    ├── rose.png
-    └── woman.png
+    ├── couchCat.png
+    ├── owlHat.png
+    └── scifi_cover.png
 
 ```
