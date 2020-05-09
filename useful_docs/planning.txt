@@ -1,0 +1,10 @@
+steps:
+1. Check if height and width of the image is divided by 8. (import cv2)
+1.a. If it's not, then resize this image that can be divided by 8.
+2. Grayscale this image. (from skimage.color import rgb2gray)
+3. Scan this image 8x8 (by using your own DCT function).
+
+grayimage[height,width]
+for i in range(height/8):
+    for j in range(width/8):
+    	dct(grayimage[(0+8*i):(8+8*i),(0+8*j):(8+8*j)]
