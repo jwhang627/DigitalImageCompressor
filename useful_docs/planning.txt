@@ -10,3 +10,4 @@ for i in range(height/8):
     	dct(grayimage[(0+8*i):(8+8*i),(0+8*j):(8+8*j)]
 
 4. Print the result in "results" directory.
+5. Do Uniform quantization.
