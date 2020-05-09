@@ -60,7 +60,10 @@ images/
 │   └── twoWomen.jpeg
 └── png
     ├── couchCat.png
+    ├── holo.png
     ├── owlHat.png
+    ├── SansUndertale.png
     └── scifi_cover.png
+
 
 ```
