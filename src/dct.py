@@ -26,5 +26,9 @@ def dct_1d(image):
                 cos(2*pi*k/(2.0*n)*i+(k*pi)/(2.0*n))
         ck = sqrt(0.5) if k == 0 else 1
         newImage[k] = sqrt(2.0 / n) * ck * sum
-
+    
+    # Comment this out later
+    for i in range(n):
+        if ((newImage[i] > -1) and (newImage[i] < 1)):
+            newImage[i] = 0
     return newImage

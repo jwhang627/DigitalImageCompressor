@@ -38,18 +38,30 @@ def main():
     print("> graying the image.")
     for i in range(height):
         for j in range(width):
-            img[i][j] = img[i][j]*256
+            img[i][j] = int(round(img[i][j]*256,0))
     cv2.imwrite("./results/gray_image.jpeg",img)
     print("> image grayscaled.")
+
+    #gray out (subtract 128)
+    new_img = np.empty([height,width])
+    print("> subtracting gray image with 128.")
+    for i in range(height):
+        for j in range(width):
+            new_img[i][j] = img[i][j] - 128
+    cv2.imwrite("./results/gray_image_128.jpeg",new_img)
+    print("> subtracted gray image with 128.")
+
     print("> converting it to dct image.")
     for i in range(int(height/subs)):
         for j in range(int(width/subs)):
             #printing2dArray(img[(0+8*i):(8+8*i),(0+8*j):(8+8*j)])
             dct_2d(img[(0+subs*i):(subs+subs*i),\
                        (0+subs*j):(subs+subs*j)])
-
+            dct_2d(new_img[(0+subs*i):(subs+subs*i),\
+                       (0+subs*j):(subs+subs*j)])
     # write the dct result
     cv2.imwrite("./results/dct_result.jpeg",img)
+    cv2.imwrite("./results/dct_result_128.jpeg",new_img)
     print("> dct convert done.")
     # placeholder    
     """
