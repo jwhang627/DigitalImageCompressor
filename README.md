@@ -53,6 +53,8 @@ images/
 │   ├── rose.png
 │   └── woman.png
 ├── jpeg
+│   ├── comic.jpeg
+│   ├── dog_cat.jpeg
 │   ├── robot.jpeg
 │   ├── twoDogsAndWoman.jpeg
 │   └── twoWomen.jpeg
