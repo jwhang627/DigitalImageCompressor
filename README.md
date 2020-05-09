@@ -34,6 +34,8 @@ The system will have the following modules:
 ## Images
 
 ```
+size: 640x640
+
 images/
 ├── jpeg
 │   ├── butterfly.jpeg
