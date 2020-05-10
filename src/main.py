@@ -148,7 +148,15 @@ def main():
     for i in bitstream:
         wr.write(hCode[i])
     wr.close()
-    print("> done compressing bitstream into binary fi;e.")
-    
+    print("> done compressing bitstream into binary file.")
+
+    # decoding it back
+    print("> decoding binary file back.")
+    open_bin = open("./results/binary.bin","r")
+    r_bin = open_bin.read()
+    open_bin.close()
+    decode = huffmanDecode(r_bin,hCode)
+    print(bitstream[0:8])
+    print(decode.split()[0:8])
 if __name__ == '__main__':
     main()
