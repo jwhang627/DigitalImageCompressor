@@ -34,11 +34,14 @@ def get_bitstream(img):
 
 def main():
     fileName = argv[1]
-    image = 0
-    print("> checking if the file " + fileName + " is in /image directory.")
-    if exists("/images" + fileName) == false:
+    image = None
+    print("> checking if the file " + fileName + " is in /images directory.")
+    if path.exists("./images/" + fileName) == False:
         print("> file " + fileName + " doesn't exist in /image.")
     else:
         print("> image " + fileName + " found.")
-        image = imread(fileName)
-    print(image[0:1])
+        image = imread("./images/" + fileName)
+        print("> image size: ",image.shape[0],"x", image.shape[1]".")
+
+if __name__ == '__main__':
+    main()
