@@ -59,8 +59,20 @@ def main():
     #print(num_blocks_h,num_blocks_w)
     padded_img = np.zeros([height,width])
     padded_img[0:height,0:width] = image[0:height,0:width]
+    #print(padded_img[0:5,0:5])
     print("> writing uncompressed bitmap.")
     imwrite("./results/uncompressed.bmp",np.uint8(padded_img))
+
+    # subtracting image data with 128
+    print("> subtracting bitmap image with 128.")
+    img_128 = np.zeros([height,width])
+    img_128[0:height,0:width] = image[0:height,0:width]
+    for i in range(height):
+        for j in range(width):
+            img_128[i][j] -= 128
+    print("> subtracted bitmap image with 128.")
+    print("> writing subtracted bitmap.")
+    imwrite("./results/uncompressed_128.bmp",padded_img)
     
 if __name__ == '__main__':
     main()
