@@ -72,7 +72,7 @@ def main():
             img_128[i][j] -= 128
     print("> subtracted bitmap image with 128.")
     print("> writing subtracted bitmap.")
-    imwrite("./results/uncompressed_128.bmp",padded_img)
+    imwrite("./results/uncompressed_128.bmp",img_128)
     
 if __name__ == '__main__':
     main()
