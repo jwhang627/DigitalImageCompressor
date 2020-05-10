@@ -2,10 +2,12 @@
 
 import numpy as np
 import cv2
+import math
 from dct import dct_2d
 from idct import idct_2d
 from skimage.color import rgb2gray
 from zigzag import *
+from huffman import *
 
 QUANTIZATION_MAT = np.array([[16,11,10,16, 24, 40, 51, 61],\
                              [12,12,14,19, 26, 58, 60, 55],\
@@ -27,10 +29,28 @@ def printing2dArray(a):
             else:
                 print(round(a[i][j],5),end=" | ")
         print("")
+
+def get_bitstream(img):
+    i = 0
+    skip = 0
+    stream = []
+    bitstream = ""
+    img = img.astype(int)
     
+    while (i < img.shape[0]):
+        if img[i] != 0:
+            stream.append((img[i],skip))
+            bitstream += str(img[i]) + " " + str(skip) + " "
+            skip = 0
+        else:
+            skip += 1
+        i += 1
+
+    return bitstream
+        
 def main():
     # bring an image
-    fileName = "./images/png/holo.png"
+    fileName = "./images/640-jpeg/empress.jpeg"
     image = cv2.imread(fileName)
     height, width = image.shape[0:2]
     subs = 8
@@ -91,7 +111,44 @@ def main():
     cv2.imwrite("./results/dct_result.jpeg",img)
     cv2.imwrite("./results/dct_result_128.jpeg",new_img)
     print("> dct convert done.")
+    print("> getting a bitstream.")
+    bitstream = get_bitstream(padded_img.flatten())
+    print("> the compressed image contains " \
+          + str(len(bitstream)) + " bits.")
+
+    #writing to bitmap.txt
+    file1 = open("./results/bitmap.txt","w+")
+    file1.write(bitstream)
+    file1.close()
     
+    # huffman code
+    print("> converting bitstream to huffman code.")
+    bitstream = bitstream.split()
+    freq = {}
+    for c in bitstream:
+        if c in freq:
+            freq[c] += 1
+        else:
+            freq[c] = 1
+
+    freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+    nodes = freq
+    while len(nodes) > 1:
+        (k1,c1) = nodes[-1]
+        (k2,c2) = nodes[-2]
+        nodes = nodes[:-2]
+        node = NodeTree(k1,k2)
+        nodes.append((node, c1 + c2))
+        nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
+
+    hCode = huffmanCodeTree(nodes[0][0])
+
+    print("> compressing bitstream into binary file.")
+    wr = open("./results/binary.bin","w")
+    for i in bitstream:
+        wr.write(hCode[i])
+    wr.close()
+    print("> done compressing bitstream into binary fi;e.")
     
 if __name__ == '__main__':
     main()

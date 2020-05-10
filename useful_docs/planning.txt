@@ -12,3 +12,4 @@ for i in range(height/8):
 4. Print the result in "results" directory.
 5. Do Uniform quantization.
 6. Turn it into Huffman code.
+   a. isolate spaces within bitmap.
