@@ -1,4 +1,4 @@
-# DigitalImageCompressor
+# Digital Image Compressor
 Final Project for Digital Image Class
 
 Language: Python3
