@@ -5,3 +5,11 @@ https://stackoverflow.com/questions/7110899/how-do-i-apply-a-dct-to-an-image-in-
 https://en.wikipedia.org/wiki/Embedded_Zerotrees_of_Wavelet_transforms
 
 https://www.techrepublic.com/article/huffman-coding-in-python/
+
+https://github.com/getsanjeev/compression-DCT
+
+https://github.com/AbraaoHonorio/DCT-Discrete-Cosine-Transform
+
+https://www.programming-techniques.com/2014/02/discrete-cosine-transform-and-jpeg-compression-image-processing.html
+
+For PSNR: https://dsp.stackexchange.com/questions/38065/peak-signal-to-noise-ratio-psnr-in-python-for-an-image
