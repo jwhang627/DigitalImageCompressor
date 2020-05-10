@@ -156,7 +156,110 @@ def main():
     r_bin = open_bin.read()
     open_bin.close()
     decode = huffmanDecode(r_bin,hCode)
-    print(bitstream[0:8])
-    print(decode.split()[0:8])
+    details = decode.split()
+    #print(bitstream[0:8])
+    #print(decode.split()[0:8])
+    #decode_len = len(decode)
+    print("> done decoding.")
+    #h_decode, w_decode = decode.split().shape
+    #h_decode, w_decode = height, width
+    h = int(''.join(filter(str.isdigit,details[0])))
+    w = int(''.join(filter(str.isdigit,details[1])))
+    #arr = np.zeros([height,width]).astype(int)
+    arr = np.zeros(h*w).astype(int)
+    #decode.split()
+    # some loop var initialization
+    """
+    a = 0
+    b = 1
+    for i in range(decode_len):
+        arr[a][b-1] = decode[i]
+        b += 1
+        if (b%width == 0):
+            a += 1
+            b = 0
+    """
+    k = 0
+    i = 2
+    x = 0
+    j = 0
+
+    while k < arr.shape[0]:
+        if(details[i] == ';'):
+            break
+
+        if "-" not in details[i]:
+            arr[k] = int(''.join(filter(str.isdigit, details[i])))        
+        else:
+            arr[k] = -1*int(''.join(filter(str.isdigit, details[i])))        
+
+        if(i+3 < len(details)):
+            j = int(''.join(filter(str.isdigit, details[i+3])))
+
+        if j == 0:
+            k += 1
+        else:
+            k += j + 1        
+
+        i += 2
+
+    arr = np.reshape(arr,(h,w))
+    print("> converting decoded file to idct image.")
+
+    # loop for constructing intensity matrix form frequency matrix (IDCT)
+    padded_img = np.zeros((height,width))
+    """
+     print("> converting them to dct images.")
+    for i in range(int(height/subs)):
+        for j in range(int(width/subs)):
+            dct_2d(img[(0+subs*i):(subs+subs*i),\
+                       (0+subs*j):(subs+subs*j)])
+            dct_2d(new_img[(0+subs*i):(subs+subs*i),\
+                       (0+subs*j):(subs+subs*j)])
+            dct_normal = np.divide(\
+                        new_img[(0+subs*i):(subs+subs*i),\
+                                (0+subs*j):(subs+subs*j)],\
+                                   QUANTIZATION_MAT).astype(int)
+            reordered = zigzag(dct_normal)
+            reshaped = np.reshape(reordered,(subs,subs))
+            padded_img[(0+subs*i):(subs+subs*i),\
+                       (0+subs*j):(subs+subs*j)]\
+                       = reshaped
+    """
+    """
+    for i in range(int(height/subs)):
+        for j in range(int(width/subs)):
+            temp_stream = arr[(0+subs*i):(subs+subs*i),\
+                              (0+subs*j):(subs+subs*j)]
+            block = izigzag(temp_stream.flatten(),subs,subs);
+            de_quantized = np.multiply(block,QUANTIZATION_MAT)
+            padded_img[(0+subs*i):(subs+subs*i),\
+                       (0+subs*j):(subs+subs*j)]\
+                       = idct_2d(de_quantized)
+            # cv2.idct(de_quantized)
+            #idct_2d(padded_img[(0+subs*i):(subs+subs*i),\
+            #                   (0+subs*j):(subs+subs*j)])
+    """
+    i = 0
+    j = 0
+    k = 0
+    while i < h:
+        j = 0
+        while j < w:
+            temp_stream = arr[i:i+8,j:j+8]
+            block = izigzag(temp_stream.flatten(), subs, subs)
+            de_quantized = np.multiply(block,QUANTIZATION_MAT)
+            padded_img[i:i+8,j:j+8] = cv2.idct(de_quantized)
+            j += 8
+        i += 8
+    
+    print("> done inverting dct.")
+    print("> writing a new compressed bitmap image.")
+    padded_img[padded_img > 255] = 255
+    padded_img[padded_img < 0] = 0
+    # there was an error
+    cv2.imwrite("./results/compressed_idct_image.bmp",np.uint8(padded_img))
+    print("> done.")
+    
 if __name__ == '__main__':
     main()
