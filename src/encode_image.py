@@ -2,6 +2,8 @@
 
 import numpy as np
 import math
+#import pickle
+import json
 from cv2 import *
 from sys import *
 from zigzag import *
@@ -102,10 +104,10 @@ def main():
     
     # writing bitstream to txt file
     print("> writing bitstream to .bin file and .txt file.")
-    bitBin = open("./results/binary.bin","w")
+    bitBin = open("./results/binary.bin","w+")
     bitBin.write(bitstr)
     bitBin.close()
-    bitTxt = open("./results/bitmap.txt","w")
+    bitTxt = open("./results/bitmap.txt","w+")
     bitTxt.write(bitstr)
     bitTxt.close()
 
@@ -132,12 +134,20 @@ def main():
     hCode = huffmanCodeTree(nodes[0][0])
     print("> finished huffman code.")
     print("> writing it to different binary file.")
-    wr = open("./results/bitstream.bin","w")
+    wr = open("./results/bitstream.bin","w+")
     for i in bitty:
         wr.write(hCode[i])
     wr.close()
-    print("> wrote the binary file as \"./results/bitstream.bin\". finished encoding image.")
+    print("> wrote the binary file as \"./results/bitstream.bin\".")
+
+    # writing json file
+    print("> writing huffman node tree as \"./results/hufftree.json\".")
+
+    json.dump(hCode,open("./results/hufftree.json","w+"))
     
-    
+    #with open("./results/hufftree.pkl","wb") as tree_file:
+    #    pickle.dump(hCode,tree_file,pickle.HIGHEST_PROTOCOL)
+    #tree_file.close()
+    print("> finished encoding image.")
 if __name__ == '__main__':
     main()
