@@ -112,6 +112,13 @@ while i < h:
 
 print("> three tasks finished.")
 
+#cv2.imwrite("./results/compressed_128.bmp",\
+#            np.uint8(padded_img))
+
+for i in range(padded_img.shape[0]):
+    for j in range(padded_img.shape[1]):
+        padded_img[i][j] += 128
+
 # clamping to  8-bit max-min values
 padded_img[padded_img > 255] = 255
 padded_img[padded_img < 0] = 0

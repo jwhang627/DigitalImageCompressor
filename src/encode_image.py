@@ -99,11 +99,20 @@ W =  block_size * nbw
 print("> writing uncompressed bitmap.")
 padded_img = np.zeros((H,W))
 padded_img[0:height,0:width] = img[0:height,0:width]
-cv2.imwrite('./results/uncompressed.bmp', np.uint8(padded_img))
 
-print("> starts dct transform, uniform quantization, and zig-zag scanning.")
+cv2.imwrite("./results/uncompressed.bmp", np.uint8(padded_img))
+
+for i in range(padded_img.shape[0]):
+    for j in range(padded_img.shape[1]):
+        padded_img[i][j] -= 128
+
+cv2.imwrite("./results/uncompressed_128.bmp",\
+            np.uint8(padded_img))
+
+print("> starts dct transform,"+\
+      " uniform quantization, and zig-zag scanning.")
+
 # start encoding:
-
 for i in range(nbh):
     # Compute start and end row index of the block
     row_ind_1 = i*block_size                
@@ -119,7 +128,7 @@ for i in range(nbh):
         reordered = zigzag(DCT_normalized)
         reshaped= np.reshape(reordered,(block_size, block_size))
         padded_img[row_ind_1:row_ind_2\
-                   ,col_ind_1:col_ind_2] = reshaped                        
+                   ,col_ind_1:col_ind_2] = reshaped
 
 print("> three tasks done.")
 imwrite('./results/encoded.bmp', np.uint8(padded_img))
@@ -128,7 +137,12 @@ print("> wrote dct results to new images."\
 
 #arranged = padded_img.flatten()
 print("> getting a bitstream for \"encoded.bmp\"")
+
 bitstream = get_bitstream(padded_img.flatten())
+
+print("> bitstream for \"encoded.bmp\" is "\
+      + str(len(bitstream)) + " bits.")
+
 bitstream = str(padded_img.shape[0])\
     + " " + str(padded_img.shape[1]) + " " + bitstream + ";"
 

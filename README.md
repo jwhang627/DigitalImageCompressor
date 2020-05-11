@@ -3,7 +3,8 @@ Final Project for Digital Image Class
 
 Language: Python3
 
-Operating System(s): Debian Buster (linux bash shell on Windows), & Ubuntu 20.04 LTS (and maybe MX Linux 19.1)
+Operating System(s): Debian Buster (linux bash shell on Windows), &
+Ubuntu 20.04 LTS (and maybe MX Linux 19.1)
 
 Editors: Emacs, Vim, & Nano
 
@@ -21,7 +22,8 @@ The system will have the following modules:
 2. Uniform quantization;
 3. Zig-zag scan (use a table) and run-level coding;
 4. Size + amplitude representation of the non-zero coefficients;
-5. Use Huffman coder (to be provided by MATLAB) to encode run-size sequence; Do binary representation of the amplitude.
+5. Use Huffman coder (to be provided by MATLAB) to encode run-size
+sequence; Do binary representation of the amplitude.
 6. Calculate the bit rate of the compressed image.
 
 **Decoder:**
@@ -52,6 +54,12 @@ images/
 │   ├── robinWilliams.png
 │   ├── rose.png
 │   └── woman.png
+├── analog_1.jpg
+├── analog_2.jpg
+├── analog_3.jpg
+├── fanart_1.jpeg
+├── fanart_2.jpeg
+├── fanart_3.jpeg
 ├── jpeg
 │   ├── comic.jpeg
 │   ├── dog_cat.jpeg
@@ -64,6 +72,5 @@ images/
     ├── owlHat.png
     ├── SansUndertale.png
     └── scifi_cover.png
-
 
 ```

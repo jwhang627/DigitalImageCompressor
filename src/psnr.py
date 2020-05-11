@@ -14,6 +14,7 @@ import numpy as np
 
 def PsnR(ori,com):
     mse = np.mean((ori - com)**2)
+    print("> MSE: " + str(mse) + ".")
     if (mse == 0):
         # MSE is zero means no noise is present in the signal .
         # Therefore PSNR have no importance. 
@@ -27,7 +28,7 @@ def main():
     compressed = cv2.imread("./results/compressed_image.jpeg")
     value = PsnR(original,compressed)
     print("> psnr value between bmp and jpeg" +\
-          "  from constructed function is: "\
+          " from constructed function is: "\
                  + str(value) + " dB.")
     print("> psnr value between bmp and jpeg" +\
           " from cv2 library is: "\
