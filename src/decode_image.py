@@ -75,13 +75,14 @@ def main():
         else:
             k += j + 1
         i += 2
-
+    """
     i = 0
     j = 0
     k = 0
-    """
-    padded_img = np.zeros([h,w])
+    
+    padded_img = np.zeros((h,w))
     print("> done parsing binary file.")
+    #print(array[0:8,0:8])
     print("> decoding through inverse quantization, zig-zag scan, and inverse dct.")
     # decoding through inverse quantization, zig-zag scan, and inverse DCT
     while i < h:
@@ -90,11 +91,15 @@ def main():
             temp_stream = array[i:i+bl_size,j:j+bl_size]
             bl = izigzag(temp_stream.flatten(),\
                          int(bl_size), int(bl_size))
-            de_q = np.multiply(bl,Q_MAP)
+            #print(bl)
+            de_q = np.multiply(bl,Q_MAT)
+            #print(de_q)
             padded_img[i:i+bl_size,j:j+bl_size] = idct(de_q)
             j += bl_size
         i += bl_size
 
+    #print(padded_img[0:8,0:8])
+        
     padded_img[padded_img > 255] = 255
     padded_img[padded_img < 0] = 0
 
