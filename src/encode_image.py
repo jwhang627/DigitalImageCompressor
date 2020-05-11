@@ -29,9 +29,15 @@ def get_bitstream(image):
         i = i + 1
     return bitstream
 
-# defining block size
+# defining block size (from your second argument)
 block_size = 8
-
+"""
+if block_size.isdigit() == False:
+    print("> wrong third argument")
+    exit("wrong third argument")
+else:
+    block_size = int(block_size)
+"""
 # Quantization Matrix 
 Q_MAT = np.array([[16,11,10,16,24,40,51,61],\
                   [12,12,14,19,26,58,60,55],\
@@ -43,16 +49,22 @@ Q_MAT = np.array([[16,11,10,16,24,40,51,61],\
                   [72,92,95,98,112,100,103,99]])
 
 # reading image in grayscale style
+if len(argv) < 2:
+    print("> it requires images." \
+          + " pick one with any category in images/ directory.")
+    exit("no image")
+
 fileName = argv[1]
+
 
 print("> checking if the file " + fileName + " is in /images directory.")
 
-if path.exists("./images/"+fileName) == False:
+if path.exists(fileName) == False:
     print("> file " + fileName + " doesn't exist in /images.")
     exit("non-existence file.")
 else:
-    print("> image " + fileName + " found.")
-    img = cv2.imread("./images/"+fileName, IMREAD_GRAYSCALE)
+    print("> image /" + fileName + " found.")
+    img = cv2.imread(fileName, IMREAD_GRAYSCALE)
     print("> image grayscaled.")
     # get size of the image
     [h,w] = img.shape

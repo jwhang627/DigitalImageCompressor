@@ -24,11 +24,20 @@ def PsnR(ori,com):
 
 def main():
     original = cv2.imread("./results/uncompressed.bmp")
+    compressed = cv2.imread("./results/compressed_image.jpeg")
+    value = PsnR(original,compressed)
+    print("> psnr value between bmp and jpeg" +\
+          "  from constructed function is: "\
+                 + str(value) + " dB.")
+    print("> psnr value between bmp and jpeg" +\
+          " from cv2 library is: "\
+          +str(cv2.PSNR(original,compressed)) + " dB.")
     compressed = cv2.imread("./results/compressed_image.bmp")
     value = PsnR(original,compressed)
-    print("> psnr value from constructed function is: "\
-                 + str(value) + " dB.")
-    print("> psnr value from cv2 library is: "\
+    print("> psnr value between two bmps is " + str(value) + " dB.")
+    print("> psnr value between two bmps" +\
+          " from cv2 library is: "\
           +str(cv2.PSNR(original,compressed)) + " dB.")
+
 if __name__ == "__main__":
     main()

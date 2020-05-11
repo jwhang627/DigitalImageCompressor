@@ -4,11 +4,13 @@ import cv2
 import numpy as np
 import math
 import json
-import os
+#import os
 
 # import zigzag functions
 from zigzag import *
 from huffman import *
+from sys import *
+from os import path, system
 
 Q_MAT = np.array([[16,11,10,16,24,40,51,61],\
                   [12,12,14,19,26,58,60,55],\
@@ -22,6 +24,11 @@ Q_MAT = np.array([[16,11,10,16,24,40,51,61],\
 # huffman decoding
 print("> opening saved huffman code txt file.")
 img = None
+
+if path.exists("./results/huffman_encode.txt") == False:
+    print("> encode the image first.")
+    exit("file missing")
+
 with open("./results/huffman_encode.txt", 'r') as o_bin:
     img = o_bin.read()
 data = json.load(open("./results/hufftree.json"))
@@ -38,7 +45,13 @@ print("> huffman code file opened and decoded."\
 
 # defining block size
 block_size = 8
-
+"""
+if block_size.isdigit() == False:
+    print("> wrong second argument")
+    exit("wrong second argument")
+else:
+    block_size = int(block_size)
+"""
 # parsing
 print("> parsing data from encoding.")
 details = decode.split()
@@ -103,11 +116,15 @@ print("> three tasks finished.")
 padded_img[padded_img > 255] = 255
 padded_img[padded_img < 0] = 0
 
-# compressed image is written
-cv2.imwrite("./results/compressed_image.bmp",np.uint8(padded_img))
+# compressed images are written
+cv2.imwrite("./results/compressed_image.jpeg",np.uint8(padded_img))
 print("> finished decoding."+\
-      " it is now saved as \"./results/decoded_compressed_image.bmp\"")
+      " it is now saved as "\
+      +"\"./results/compressed_image.jpeg\"")
+cv2.imwrite("./results/compressed_image.bmp",np.uint8(padded_img))
+print("> and also \"./results/compressed_image.bmp\"")
+
 
 print("> checking PSNR value of compressed and uncompressed images.")
 cmd = 'python3 src/psnr.py'
-os.system(cmd)
+system(cmd)
