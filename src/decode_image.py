@@ -101,10 +101,10 @@ def main():
             j += bl_size
         i += bl_size
 
-    #print(padded_img[0:8,0:8])
+    print(np.uint8(padded_img[320:336,320:336]))
         
-    padded_img[padded_img > 255] = 255
-    padded_img[padded_img < 0] = 0
+    #padded_img[padded_img > 255] = 255
+    #padded_img[padded_img < 0] = 0
 
     imwrite("./results/decoded_compressed_image.bmp",np.uint8(padded_img))
     print("> done decoding. it is saved as \"./results/decoded_compressed_image.bmp\"")
