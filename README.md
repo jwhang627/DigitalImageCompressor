@@ -33,6 +33,21 @@ sequence; Do binary representation of the amplitude.
 3. Inverse DCT;
 4. Compute the PSNR of the reconstructed image;
 
+## Directions
+
+Use this (Linux) command to encode the image:
+
+```
+python3 encode_image.py <image from images/ directory>
+```
+
+And you can decode it back. This will also gives you PSNR result of
+two images as well.:
+
+```
+python3 decode_image.py
+```
+
 ## Images
 
 Images used in this project came from Unsplash, Creative Commons,
