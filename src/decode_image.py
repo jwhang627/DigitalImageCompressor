@@ -95,6 +95,9 @@ def main():
             de_q = np.multiply(bl,Q_MAT)
             #print(de_q)
             padded_img[i:i+bl_size,j:j+bl_size] = idct(de_q)
+            for y in range(bl_size):
+                for z in range(bl_size):
+                    padded_img[y,z] += 128
             j += bl_size
         i += bl_size
 
