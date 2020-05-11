@@ -35,12 +35,70 @@ def main():
 
     # parsing data
     print("> parsing data")
-    h = ''.join(filter(str.isdigit,details[0]))
-    w = ''.join(filter(str.isdigit,details[1]))
-    #array = np.zeros(h*w).astype(int)
-    #print(len(array))
-    print(h)
-    print(w)
+    h = int(''.join(filter(str.isdigit,details[0])))
+    w = int(''.join(filter(str.isdigit,details[1])))
+
+    #details = details.split()
+    
+    array = np.zeros([h,w]).astype(int)
+    
+    i = 2
+    j = 0
+    k = 0
+    while details[i] != ';':
+        array[j][k] = details[i]
+        if k >= w:
+            k = 0
+            j += 1
+        i += 1
+
+    """
+    k = 0
+    i = 2
+    x = 0
+    j = 0
+
+    while k < array.shape[0]:
+        if (details[i] == ';'): # break
+            break
+        if "-" not in details[i]:
+            array[k] = int(''.join(filter(str.isdigit, details[i])))
+        else:
+            array[k] = -1*int(''.join(filter(str.isdigit, details[i])))
+
+        if (i + 3 < len(details)):
+            j = int(''.join(filter(str.isdigit, details[i+3])))
+
+        if j == 0:
+            k += 1
+        else:
+            k += j + 1
+        i += 2
+
+    i = 0
+    j = 0
+    k = 0
+    """
+    padded_img = np.zeros([h,w])
+    print("> done parsing binary file.")
+    print("> decoding through inverse quantization, zig-zag scan, and inverse dct.")
+    # decoding through inverse quantization, zig-zag scan, and inverse DCT
+    while i < h:
+        j = 0
+        while j < w:
+            temp_stream = array[i:i+bl_size,j:j+bl_size]
+            bl = izigzag(temp_stream.flatten(),\
+                         int(bl_size), int(bl_size))
+            de_q = np.multiply(bl,Q_MAP)
+            padded_img[i:i+bl_size,j:j+bl_size] = idct(de_q)
+            j += bl_size
+        i += bl_size
+
+    padded_img[padded_img > 255] = 255
+    padded_img[padded_img < 0] = 0
+
+    imwrite("./results/decoded_compressed_image.bmp",np.uint8(padded_img))
+    print("> done decoding. it is saved as \"./results/decoded_compressed_image.bmp\"")
 
 if __name__ == "__main__":
     main()
