@@ -72,9 +72,10 @@ def main():
     for i in range(height):
         for j in range(width):
             img_128[i][j] -= 128
+
     print("> subtracted bitmap image with 128.")
     print("> writing subtracted bitmap.")
-    imwrite("./results/uncompressed_128.bmp",img_128)
+    imwrite("./results/uncompressed_128.bmp",np.uint8(img_128))
 
     print("> starts dct transform, uniform quantization, and zig-zag scan.")
     for i in range(num_blocks_h):
