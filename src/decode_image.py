@@ -25,9 +25,9 @@ def main():
     img = None
     # decoding
     print("> decoding binary file back.")
-    with open("./results/bitstream.bin","r") as open_bin:
+    with open("./results/bitstream_128.bin","r") as open_bin:
         img = open_bin.read()
-    data = json.load(open("./results/hufftree.json"))
+    data = json.load(open("./results/hufftree_128.json"))
     open_bin.close()
     decode = huffmanDecode(img,data)
     details = decode.split()
