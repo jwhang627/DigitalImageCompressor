@@ -23,15 +23,24 @@ Q_MAT = np.array([[16,11,10,16, 24, 40, 51, 61],\
 
 def main():
     img = None
+    # decoding
     print("> decoding binary file back.")
     with open("./results/bitstream.bin","r") as open_bin:
         img = open_bin.read()
     data = json.load(open("./results/hufftree.json"))
-    #print(img)
-    #print(data)
     open_bin.close()
     decode = huffmanDecode(img,data)
-    print(decode)
+    details = decode.split()
+    print("> done decoding.")
+
+    # parsing data
+    print("> parsing data")
+    h = ''.join(filter(str.isdigit,details[0]))
+    w = ''.join(filter(str.isdigit,details[1]))
+    #array = np.zeros(h*w).astype(int)
+    #print(len(array))
+    print(h)
+    print(w)
 
 if __name__ == "__main__":
     main()

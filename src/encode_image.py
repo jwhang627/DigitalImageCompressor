@@ -111,7 +111,7 @@ def main():
           + str(len(bitstr_128)) + " bits.")
     
     # two terms are assigned for size as well
-    bitstr = str(padded_img.shape[0]) + " " + str(padded_img[1]) + " " + bitstr + ";"
+    bitstr = str(padded_img.shape[0]) + " " + str(padded_img.shape[1]) + " " + bitstr + ";"
     bitstr_128 = str(img_128.shape[0]) + " " + str(img_128.shape[1]) + " " + bitstr_128 + ";"
     
     # writing bitstream to bin and txt file
