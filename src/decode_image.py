@@ -1,7 +1,10 @@
+# src/decode_image.py
+
 import cv2
 import numpy as np
 import math
 import json
+import os
 
 # import zigzag functions
 from zigzag import *
@@ -104,3 +107,7 @@ padded_img[padded_img < 0] = 0
 cv2.imwrite("./results/compressed_image.bmp",np.uint8(padded_img))
 print("> finished decoding."+\
       " it is now saved as \"./results/decoded_compressed_image.bmp\"")
+
+print("> checking PSNR value of compressed and uncompressed images.")
+cmd = 'python3 src/psnr.py'
+os.system(cmd)
