@@ -46,7 +46,8 @@ def main():
     j = 0
     k = 0
     while details[i] != ';':
-        array[j][k] = details[i]
+        array[j][k] = int(details[i])
+        k += 1
         if k >= w:
             k = 0
             j += 1
