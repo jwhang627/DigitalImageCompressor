@@ -89,7 +89,7 @@ def main():
             padded_img[row_ind_1:row_ind_2,col_ind_1:col_ind_2] = reshaped
     print("> three tasks done.")
     print("> writing dct result to a new image.")
-    imwrite("./results/dct_result.bmp",padded_img)
+    imwrite("./results/dct_result.bmp",np.uint8(padded_img))
     
     
     # get bitstream
