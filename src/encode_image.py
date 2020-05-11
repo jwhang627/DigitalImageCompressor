@@ -84,25 +84,36 @@ def main():
             col_ind_1 = bl_size * j
             col_ind_2 = col_ind_1 + bl_size
             dCT = dct(padded_img[row_ind_1:row_ind_2,col_ind_1:col_ind_2])
+            dCT_128 = dct(img_128[row_ind_1:row_ind_2,col_ind_1:col_ind_2])
             dct_norm = np.divide(dCT,Q_MAT).astype(int)
+            dct_norm_128 = np.divide(dCT_128,Q_MAT).astype(int)
             reshaped = np.reshape(zigzag(dct_norm),(bl_size,bl_size))
+            reshaped_128 = np.reshape(zigzag(dct_norm_128),(bl_size,bl_size))
             padded_img[row_ind_1:row_ind_2,col_ind_1:col_ind_2] = reshaped
-    print("> three tasks done.")
-    print("> writing dct result to a new image.")
-    imwrite("./results/dct_result.bmp",np.uint8(padded_img))
-    
-    
-    # get bitstream
-    print("> get bitstream.")
-    bitstr = get_bitstream(padded_img.flatten().astype(int))
-    print("> the compressed image contains " \
-          + str(len(bitstr)) + " bits.")
+            img_128[row_ind_1:row_ind_2,col_ind_1:col_ind_2] = reshaped_128
 
-    # two terms are assigned for size as well
-    bitstr = str(padded_img.shape[0]) + " " + str(padded_img[1])\
-        + " " + bitstr + ";"
+    print("> three tasks done.")
+    print("> writing dct results to new images.")
+    imwrite("./results/dct_result.bmp",np.uint8(padded_img))
+    #imwrite("./results/dct_result.bmp",padded_img)
+    imwrite("./results/dct_result_128.bmp",np.uint8(img_128))
+    #imwrite("./results/dct_result_128.bmp",img_128)
     
-    # writing bitstream to txt file
+    # get bitstreams
+    print("> get bitstream for \"dct_result.bmp\".")
+    bitstr = get_bitstream(padded_img.flatten().astype(int))
+    print("> this compressed image contains "\
+          + str(len(bitstr)) + " bits.")
+    print("> get bitstream for \"dct_result_128.bmp\".")
+    bitstr_128 = get_bitstream(img_128.flatten().astype(int))
+    print("> this compressed image contains "\
+          + str(len(bitstr_128)) + " bits.")
+    
+    # two terms are assigned for size as well
+    bitstr = str(padded_img.shape[0]) + " " + str(padded_img[1]) + " " + bitstr + ";"
+    bitstr_128 = str(img_128.shape[0]) + " " + str(img_128.shape[1]) + " " + bitstr_128 + ";"
+    
+    # writing bitstream to bin and txt file
     print("> writing bitstream to .bin file and .txt file.")
     bitBin = open("./results/binary.bin","w+")
     bitBin.write(bitstr)
@@ -111,18 +122,38 @@ def main():
     bitTxt.write(bitstr)
     bitTxt.close()
 
+    print("> writing subtracted bitstream to .bin file and .txt file.")
+    bitBin = open("./results/binary_128.bin","w+")
+    bitBin.write(bitstr_128)
+    bitBin.close()
+    bitTxt = open("./results/bitmap_128.txt","w+")
+    bitTxt.write(bitstr_128)
+    bitTxt.close()
+    
     #huffman encoding
     print("> begin compressing bitstream stuffs through huffman code.")
     bitty = bitstr.split()
+    bitty_128 = bitstr_128.split()
     freq = {}
+    freq_128 = {}
+
     for i in bitty:
         if i in freq:
-            freq[i] += 1
+          freq[i] += 1
         else:
-            freq[i] = 1
+          freq[i] = 1
 
+    for i in bitty_128:
+        if i in freq_128:
+          freq_128[i] += 1
+        else:
+          freq_128[i] = 1
+          
     freq = sorted(freq.items(),key=lambda x: x[1], reverse=True)
+    freq_128 = sorted(freq_128.items(),key=lambda x: x[1], reverse=True)
     nodes = freq
+    nodes_128 = freq_128
+
     while len(nodes) > 1:
         (k1,c1) = nodes[-1]
         (k2,c2) = nodes[-2]
@@ -131,23 +162,37 @@ def main():
         nodes.append((node,c1 + c2))
         nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
 
+    while len(nodes_128) > 1:
+          (k1,c1) = nodes_128[-1]
+          (k2,c2) = nodes_128[-2]
+          nodes_128 = nodes_128[:-2]
+          node = NodeTree(k1,k2)
+          nodes_128.append((node,c1 + c2))
+          nodes_128 = sorted(nodes_128,key=lambda x: x[1], reverse=True)
+          
     hCode = huffmanCodeTree(nodes[0][0])
+    hCode_128 = huffmanCodeTree(nodes_128[0][0])
     print("> finished huffman code.")
-    print("> writing it to different binary file.")
+    print("> writing them to different binary files.")
     wr = open("./results/bitstream.bin","w+")
     for i in bitty:
         wr.write(hCode[i])
     wr.close()
-    print("> wrote the binary file as \"./results/bitstream.bin\".")
+    wr = open("./results/bitstream_128.bin","w+")
+    for i in bitty_128:
+          wr.write(hCode_128[i])
+    wr.close()
+    print("> wrote binary files as \"./results/bitstream.bin\" & \"./results/bitstream_128.bin\".")
 
     # writing json file
-    print("> writing huffman node tree as \"./results/hufftree.json\".")
-
+    print("> writing huffman node trees as \"./results/hufftree.json\" & \"./results/hufftree_128.json\".")
     json.dump(hCode,open("./results/hufftree.json","w+"))
-    
+    json.dump(hCode_128,open("./results/hufftree_128.json","w+"))
+          
     #with open("./results/hufftree.pkl","wb") as tree_file:
     #    pickle.dump(hCode,tree_file,pickle.HIGHEST_PROTOCOL)
     #tree_file.close()
-    print("> finished encoding image.")
+    print("> finished encoding images.")
+
 if __name__ == '__main__':
     main()
